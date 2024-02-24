@@ -103,6 +103,20 @@ class BaseDataset(torch.utils.data.Dataset):
                     cfg.preprocess.mel_dir,
                     uid + ".npy",
                 )
+        
+        if cfg.preprocess.use_latent:
+            self.utt2latent_path = {}
+            for utt_info in self.metadata:
+                dataset = utt_info["Dataset"]
+                uid = utt_info["Uid"]
+                utt = "{}_{}".format(dataset, uid)
+
+                self.utt2latent_path[utt] = os.path.join(
+                    cfg.preprocess.processed_dir,
+                    dataset,
+                    cfg.preprocess.latent_dir,
+                    uid + ".npy",
+                )
 
         if cfg.preprocess.use_linear:
             self.utt2linear_path = {}
@@ -217,6 +231,12 @@ class BaseDataset(torch.utils.data.Dataset):
             if "target_len" not in single_feature.keys():
                 single_feature["target_len"] = mel.shape[1]
             single_feature["mel"] = mel.T  # [T, n_mels]
+        
+        if self.cfg.preprocess.use_latent:
+            latent = np.load(self.utt2latent_path[utt])
+            if "target_len" not in single_feature.keys():
+                single_feature["target_len"] = latent.shape[1]
+            single_feature["latent"] = latent.T
 
         if self.cfg.preprocess.use_linear:
             linear = np.load(self.utt2linear_path[utt])

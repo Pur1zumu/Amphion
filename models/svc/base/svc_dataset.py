@@ -54,6 +54,7 @@ class SVCDataset(BaseDataset):
             self.utt2wenet_path = load_content_feature_path(
                 self.metadata, cfg.preprocess.processed_dir, cfg.preprocess.wenet_dir
             )
+        
 
     def __getitem__(self, index):
         single_feature = BaseDataset.__getitem__(self, index)

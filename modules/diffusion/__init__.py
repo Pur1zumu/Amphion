@@ -5,3 +5,4 @@
 
 from .bidilconv.bidilated_conv import BiDilConv
 from .unet.unet import UNet
+from .dit.dit import DiT

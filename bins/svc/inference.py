@@ -15,6 +15,7 @@ from models.svc.diffusion.diffusion_inference import DiffusionInference
 from models.svc.comosvc.comosvc_inference import ComoSVCInference
 from models.svc.transformer.transformer_inference import TransformerInference
 from models.svc.vits.vits_inference import VitsInference
+from models.svc.dit.dit_inference import DiTSVCInference
 from utils.util import load_config
 from utils.audio_slicer import split_audio, merge_segments_encodec
 from processors import acoustic_extractor, content_extractor
@@ -26,6 +27,7 @@ def build_inference(args, cfg, infer_type="from_dataset"):
         "DiffComoSVC": ComoSVCInference,
         "TransformerSVC": TransformerInference,
         "VitsSVC": VitsInference,
+        "DiTSVC": DiTSVCInference,
     }
 
     inference_class = supported_inference[cfg.model_type]

@@ -247,5 +247,10 @@ class ConditionEncoder(nn.Module):
             outputs = torch.cat([out[None, :, :, :] for out in outputs], dim=0)
             # (N, seq_len, output_dim)
             encoder_output = torch.sum(outputs, dim=0)
+        else:
+            encoder_output = {}
+            for k in ['frame_pitch', 'frame_energy', 'whisper_feat', 'contentvec_feat', 'mert_feat', 'wenet_feat', 'spk_id']:
+                if k in x.keys():
+                    encoder_output[k] = x[k]
 
         return encoder_output

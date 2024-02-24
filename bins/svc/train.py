@@ -11,6 +11,7 @@ from models.svc.diffusion.diffusion_trainer import DiffusionTrainer
 from models.svc.comosvc.comosvc_trainer import ComoSVCTrainer
 from models.svc.transformer.transformer_trainer import TransformerTrainer
 from models.svc.vits.vits_trainer import VitsSVCTrainer
+from models.svc.dit.dit_trainer import DiTSVCTrainer
 from utils.util import load_config
 
 
@@ -20,6 +21,7 @@ def build_trainer(args, cfg):
         "DiffComoSVC": ComoSVCTrainer,
         "TransformerSVC": TransformerTrainer,
         "VitsSVC": VitsSVCTrainer,
+        "DiTSVC": DiTSVCTrainer,
     }
 
     trainer_class = supported_trainer[cfg.model_type]

@@ -13,6 +13,7 @@ from sklearn.preprocessing import StandardScaler
 from utils.io import save_feature, save_txt, save_torch_audio
 from utils.util import has_existed
 from utils.tokenizer import extract_encodec_token
+from utils.dac import extract_dac_latent
 from utils.stft import TacotronSTFT
 from utils.dsp import compress, audio_to_label
 from utils.data_utils import remove_outlier
@@ -218,6 +219,13 @@ def __extract_utt_acoustic_features(dataset_output, cfg, utt):
                 codes = extract_encodec_token(wav_path)
                 save_feature(
                     dataset_output, cfg.preprocess.acoustic_token_dir, uid, codes
+                )
+        
+        if cfg.preprocess.extract_acoustic_latent:
+            if cfg.preprocess.acoustic_latent_extractor == "DAC":
+                latent = extract_dac_latent(wav_path)
+                save_feature(
+                    dataset_output, cfg.preprocess.acoustic_latent_dir, uid, latent
                 )
 
 
